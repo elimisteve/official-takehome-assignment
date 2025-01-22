@@ -2,9 +2,13 @@
   "name": "team-directory-backend",
   "version": "1.0.0",
   "description": "Team Directory Backend",
+  "type": "module",
+  "ts-node": {
+    "esm": true
+  },
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "npx tsx watch src/index.ts",
     "build": "tsc --build",
     "start": "node dist/index.js",
     "test": "jest --config jest.config.js --watchAll=false --runInBand --detectOpenHandles",
@@ -49,6 +53,7 @@
     "@types/supertest": "^2.0.12",
     "jest": "^29.6.2",
     "ts-jest": "^29.1.1",
+    "tsx": "^4.19.2",
     "typescript": "^5.3.3"
   }
 }
