@@ -80,6 +80,33 @@ describe('Team Member API', () => {
     expect(updated?.status).toEqual('On Leave');
   });
 
+  test('PATCH /api/team-members/:id updates title', async () => {
+    const member = await prisma.teamMember.create({
+      data: {
+        firstName: 'Test',
+        lastName: 'User',
+        title: 'Tester',
+        department: 'QA',
+        status: 'Active',
+        startDate: new Date(),
+        email: 'test@example.com'
+      }
+    });
+
+    const res = await request(app)
+      .patch(`/api/team-members/${member.id}`)
+      .send({ title: 'Tester Updated' });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.title).toEqual('Tester Updated');
+
+    // Verify persistence
+    const updated = await prisma.teamMember.findUnique({
+      where: { id: member.id }
+    });
+    expect(updated?.title).toEqual('Tester Updated');
+  });
+
   describe('Team Member Skills Filter', () => {
     let skillsList: { id: number }[];
     let member1: { id: number };
