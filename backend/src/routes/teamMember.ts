@@ -140,7 +140,7 @@ router.patch('/:id', async (req, res, next) => {
     const id = Number(req.params.id);
 
     // Validate at least one field is provided
-    if (!firstName && !lastName && !email && !department && !status && !skills) {
+    if (!firstName && !lastName && !email && !department && !status && !skills && !title) {
       throw new AppError(400, 'At least one field must be provided for update');
     }
 
@@ -152,6 +152,7 @@ router.patch('/:id', async (req, res, next) => {
         ...(email && { email }),
         ...(department && { department }),
         ...(status && { status }),
+        ...(title && { title }),
         ...(skills.length > 0 && {
           skills: {
             deleteMany: {},
